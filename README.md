@@ -156,7 +156,7 @@ curl -s http://localhost:18901/health
 | `LLM_MODEL` | `hermes-agent` | 模型名称 |
 | `MAX_TOKENS` | `500` | 最大回复 token 数 |
 | `API_TIMEOUT` | `120` | API 请求超时（秒） |
-| `TUNNEL_NAME` | `siri-vanhci` | Cloudflare tunnel 名称 |
+| `TUNNEL_NAME` | `<tunnel-name>` | Cloudflare tunnel 名称 |
 | `CHECK_INTERVAL` | `30` | 健康检查间隔（秒） |
 
 ### Relay 命令行参数

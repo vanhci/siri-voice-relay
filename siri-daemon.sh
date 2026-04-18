@@ -8,7 +8,7 @@
 #   bash siri-daemon.sh >> siri-daemon.log 2>&1 &  # 后台运行
 #
 # 环境变量（可在下方修改或通过 export 设置）:
-#   TUNNEL_NAME        Cloudflare tunnel 名称（默认 siri-vanhci）
+#   TUNNEL_NAME        Cloudflare tunnel 名称（默认 <tunnel-name>）
 #   RELAY_PORT         Relay 监听端口（默认 18901）
 #   LLM_API_URL        LLM API 地址
 #   CHECK_INTERVAL     健康检查间隔秒数（默认 30）
@@ -17,7 +17,7 @@
 set -euo pipefail
 
 # ─── 配置 ────────────────────────────────────────────────────────────────────
-TUNNEL_NAME="${TUNNEL_NAME:-siri-vanhci}"
+TUNNEL_NAME="${TUNNEL_NAME:-<tunnel-name>}"
 RELAY_PORT="${RELAY_PORT:-18901}"
 LLM_API_URL="${LLM_API_URL:-http://127.0.0.1:8642/v1/chat/completions}"
 CHECK_INTERVAL="${CHECK_INTERVAL:-30}"
