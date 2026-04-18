@@ -1,0 +1,24 @@
+# Runtime
+*.log
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Credentials
+*.json
+*.pem
+*.key
+
+# Generated from templates
+com.siri.voice-relay.plist
+cloudflared-config.yml

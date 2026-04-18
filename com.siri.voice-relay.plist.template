@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  macOS LaunchAgent — 开机自启 Siri Voice Relay Daemon
+  用法:
+    1. 将文件复制到 ~/Library/LaunchAgents/
+    2. 修改下方 <string> 路径为你的实际路径
+    3. launchctl load ~/Library/LaunchAgents/com.siri.voice-relay.plist
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.siri.voice-relay</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/YOUR_USERNAME/.openclaw/siri-daemon.sh</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/YOUR_USERNAME/.openclaw/siri-launchd-stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/YOUR_USERNAME/.openclaw/siri-launchd-stderr.log</string>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/YOUR_USERNAME/.openclaw</string>
+</dict>
+</plist>

@@ -1,0 +1,28 @@
+# =============================================================================
+# Cloudflare Named Tunnel 配置
+# =============================================================================
+# 用法:
+#   1. 替换 <TUNNEL_ID> 和 <YOUR_DOMAIN>
+#   2. 复制到 ~/.cloudflared/config.yml
+#   3. cloudflared tunnel run <tunnel-name>
+#
+# 创建 tunnel:
+#   cloudflared tunnel login
+#   cloudflared tunnel create siri-relay
+#   cloudflared tunnel route dns siri-relay siri.<YOUR_DOMAIN>
+# =============================================================================
+
+tunnel: <TUNNEL_ID>
+credentials-file: /Users/YOUR_USERNAME/.cloudflared/<TUNNEL_ID>.json
+
+ingress:
+  # Siri relay 服务
+  - hostname: siri.<YOUR_DOMAIN>
+    service: http://localhost:18901
+
+  # 可以添加更多服务
+  # - hostname: api.<YOUR_DOMAIN>
+  #   service: http://localhost:8642
+
+  # 默认 404
+  - service: http_status:404
