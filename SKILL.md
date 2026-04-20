@@ -504,7 +504,7 @@ def send_wechat(text):
 - **文件桥接 + cron 轮询**是当前推荐方案 — 无 emoji 依赖、无 ilinkai token 管理、结果自动推回原渠道
 - ilinkai 直推方案（方案 A）已弃用 — context_token 易过期、事件循环冲突多
 - 异步模式是解决 iOS 30s 超时的终极方案
->>>>>>> 90a4155 (添加SKILL.md技能文档，清理真实地址信息，使用通用占位符)
+
 ## 关键要点
 
 - relay 必须用 `ThreadingHTTPServer`，不要用单线程的
@@ -523,4 +523,83 @@ launchctl unload ~/Library/LaunchAgents/com.hermes.siri-relay.plist 2>/dev/null
 launchctl unload ~/Library/LaunchAgents/com.hermes.siri-tunnel.plist 2>/dev/null
 rm -f ~/Library/LaunchAgents/com.hermes.siri-relay.plist
 rm -f ~/Library/LaunchAgents/com.hermes.siri-tunnel.plist
+```
+
+## 项目清理与分享
+
+将项目公开分享前，需要清理个人信息和配置占位符：
+
+### 1. 搜索个人信息模式
+
+```bash
+# 搜索用户名、真实域名、真实路径
+grep -r "vanhci" .
+grep -r "wanghanchao" .
+grep -r "siri.vanhci" .
+grep -r "your-domain.com" .  # 检查是否有需要替换的域名
+
+# 或使用 find + grep 更精确
+find . -type f -not -path "./.git/*" -exec grep -l "vanhci\|wanghanchao" {} \;
+```
+
+### 2. 替换为通用占位符
+
+| 原始内容 | 占位符 |
+|----------|--------|
+| 真实用户名（如 `vanhci`） | `<your-username>` |
+| 真实域名（如 `siri.vanhci.top`） | `siri.your-domain.com` |
+| 真实 Tunnel 名称 | `<tunnel-name>` |
+| 真实路径（如 `/Users/vanhci/`） | `/Users/<your-username>/` |
+
+```bash
+# 批量替换示例（谨慎使用，先备份）
+sed -i '' 's/vanhci/<your-username>/g' README.md SKILL.md
+sed -i '' 's/siri\.vanhci\.top/siri.your-domain.com/g' README.md SKILL.md
+sed -i '' 's/siri-vanhci/<tunnel-name>/g' siri-daemon.sh
+```
+
+### 3. 需保留的本地地址（不需要替换）
+
+- `127.0.0.1`、`localhost` — 标准本地地址
+- `:18901`、`:8642` — 本地端口
+- `/Users/<your-username>/` — 已使用占位符
+
+### 4. 处理 Git 冲突
+
+如果从分支合并或 rebase 时出现冲突：
+
+```bash
+# 查看冲突文件
+git diff --name-only --diff-filter=U
+
+# 手动解决冲突后
+git add <resolved-files>
+git rebase --continue  # 或 git commit
+```
+
+常见冲突场景：
+- 原始版本有真实地址，清理版本有占位符
+- 选择占位符版本（保留通用性）
+
+### 5. LICENSE 文件
+
+- `Copyright (c) 2026 vanhci` — 保留，这是标准版权声明，不是配置
+
+### 6. 推送清理后的版本
+
+```bash
+git add .
+git commit -m "清理个人信息，使用通用占位符"
+git push origin main
+```
+
+### 7. 验证清理效果
+
+```bash
+# 确认无真实用户名残留
+grep -r "vanhci" . --exclude-dir=.git
+
+# 确认占位符已替换
+grep -r "<your-username>" .
+grep -r "siri.your-domain.com" .
 ```
